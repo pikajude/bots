@@ -1,6 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE RankNTypes #-}
 
+-- | A connection for IRC.
 module Network.Bot.Connection.IRC (
     ircConnection
   , ircConnectionWith
@@ -30,7 +31,8 @@ ircConnectionWith f h p = Connection
     , backend = ircBackend
     , reactor = \pkt -> liftIO (print pkt) >> return True
     , connect = liftIO $ connectTo h p
-    , setup = const (return ())
+    , authInfo = ()
+    , authenticate = \_ _ -> return ()
     , execute = f
     }
 

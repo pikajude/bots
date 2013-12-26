@@ -20,6 +20,7 @@ library
                      , attoparsec
                      , bytestring
                      , containers
+                     , data-default
                      , irc-bytestring
                      , lens
                      , mtl

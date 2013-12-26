@@ -10,11 +10,15 @@ module Network.Bot.Backend (
   , Packet
   , Privilege
   , AuthInfo
+
+  , module Data.Default
 ) where
 
 import Control.Monad.IO.Class
 import Control.Monad.State           (StateT)
+import Data.Default
 import Data.Map                      (Map)
+import Data.Monoid                   (mempty)
 import Data.Text                     (Text)
 
 -- | Generalization of a connection backend.
@@ -24,6 +28,9 @@ data Backend ty = Backend
     -- | Backend-specific callbacks. These are intended to, for example, maintain the user list.
     , callback :: forall m. MonadIO m => Packet ty -> StateT (Backend ty) m ()
     }
+
+instance Default (Backend a) where
+    def = Backend mempty (const $ return ())
 
 -- | User datatype.
 type family User backend

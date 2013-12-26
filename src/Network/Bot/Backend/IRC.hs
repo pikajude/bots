@@ -21,9 +21,4 @@ type instance AuthInfo IRC = ()
 
 -- | A simple IRC backend without authentication support.
 ircBackend :: Backend IRC
-ircBackend = Backend
-    { users = mempty
-    , callback = \pkt -> do
-        liftIO $ print pkt
-        return ()
-    }
+ircBackend = def
