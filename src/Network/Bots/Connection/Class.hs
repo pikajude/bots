@@ -5,21 +5,26 @@
 {-# LANGUAGE TypeFamilies #-}
 
 -- | Connections.
-module Network.Bot.Connection.Class (
+module Network.Bots.Connection.Class (
   -- ** Connection
     Connection(..)
   , runConnection
+
+  , StatefulConnection
 ) where
 
 import Control.Monad.Error
+import Control.Monad.State.Concurrent
 import Data.Attoparsec.ByteString
 import qualified Data.ByteString as B
 import Data.Monoid                   (mempty, (<>))
-import Network.Bot.Backend
+import Network.Bots.Backend
 import System.IO
 
+type StatefulConnection s m = Connection (StateC s m)
+
 -- | A connection.
-data Connection = forall backend env. MonadIO env => Connection
+data MonadIO env => Connection env = forall backend. Connection
     { -- | @attoparsec@ parser. Support for other parsers may be forthcoming, but @attoparsec@'s partial input support makes it ideal for networking.
       parser :: Parser (Packet backend)
       -- | Connection backend.
@@ -39,7 +44,7 @@ data Connection = forall backend env. MonadIO env => Connection
     }
 
 -- | Run a readloop forever.
-runConnection :: Connection -> IO ()
+runConnection :: MonadIO m => Connection m -> IO ()
 runConnection (Connection p _ r c a s eb) = eb $ do
     h <- c
     s h a

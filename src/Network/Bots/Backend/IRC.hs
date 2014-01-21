@@ -1,11 +1,9 @@
 {-# LANGUAGE TypeFamilies #-}
 
 -- | IRC connections.
-module Network.Bot.Backend.IRC (IRC, ircBackend) where
+module Network.Bots.Backend.IRC (IRC, ircBackend) where
 
-import Control.Monad.IO.Class
-import Data.Monoid
-import Network.Bot.Backend
+import Network.Bots.Backend
 import Network.IRC.ByteString.Parser
 
 -- | Phantom type representing an IRC connection.

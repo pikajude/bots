@@ -2,7 +2,7 @@
 {-# LANGUAGE RankNTypes #-}
 
 -- | A connection for IRC.
-module Network.Bot.Connection.IRC (
+module Network.Bots.Connection.IRC (
     ircConnection
   , ircConnectionWith
 ) where
@@ -11,8 +11,8 @@ import Control.Applicative
 import Control.Monad.IO.Class
 import Data.Attoparsec.ByteString
 import Network
-import Network.Bot.Backend.IRC
-import Network.Bot.Connection.Class
+import Network.Bots.Backend.IRC
+import Network.Bots.Connection.Class
 import Network.IRC.ByteString.Parser
 
 -- | @ircConnectionWith f host port@ produces an IRC connection to @host@ and @port@, using @f@
@@ -25,7 +25,7 @@ import Network.IRC.ByteString.Parser
 --                                  \"myHost\"
 --                                  ('PortNumber' 23)
 -- @
-ircConnectionWith :: MonadIO m => (forall a. m a -> IO a) -> HostName -> PortID -> Connection
+ircConnectionWith :: MonadIO m => (forall a. m a -> IO a) -> HostName -> PortID -> Connection m
 ircConnectionWith f h p = Connection
     { parser = ircLine <* string "\r\n"
     , backend = ircBackend
@@ -39,5 +39,5 @@ ircConnectionWith f h p = Connection
 -- | IRC connection in the 'IO' monad.
 --
 -- @ircConnection = 'ircConnectionWith' id@
-ircConnection :: HostName -> PortID -> Connection
+ircConnection :: HostName -> PortID -> Connection IO
 ircConnection = ircConnectionWith id

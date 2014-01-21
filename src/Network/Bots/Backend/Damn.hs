@@ -1,7 +1,7 @@
 {-# LANGUAGE TypeFamilies #-}
 
 -- | Backend for the deviantART chat network.
-module Network.Bot.Backend.Damn (
+module Network.Bots.Backend.Damn (
   Damn,
   DamnPacket(..),
   AuthPair(..),
@@ -10,7 +10,7 @@ module Network.Bot.Backend.Damn (
 
 import Data.Map (Map)
 import Data.Text (Text)
-import Network.Bot.Backend
+import Network.Bots.Backend
 
 -- | Phantom type representing a dAmn connection.
 --

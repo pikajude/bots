@@ -2,7 +2,7 @@
 {-# LANGUAGE TypeFamilies #-}
 
 -- | Allows the same bot instance to run in parallel on multiple backends.
-module Network.Bot.Backend (
+module Network.Bots.Backend (
   -- ** The backend
     Backend(..)
   -- *** Associated types
