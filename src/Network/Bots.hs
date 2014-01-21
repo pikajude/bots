@@ -42,8 +42,9 @@ runBot cs = foldr ((>>) . wait) (return ()) =<< go cs where
         a <- async $ runConnection c
         fmap (a:) (go css)
 
--- | Convenience function to avoid lots of 'StateC' wrapping and unwrapping.
+-- | Run a bot with a preloaded state. It will be shared across
+-- connections.
 runBotWithState :: MonadIO m => a -> [Connection m] -> IO ()
 runBotWithState s cs = do
     m <- newTVarIO s
-    runBot =<< mapM (statefully m) cs
+    runBot $ statefully m cs
