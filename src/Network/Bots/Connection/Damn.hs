@@ -2,8 +2,8 @@
 
 -- | A connection for dAmn.
 module Network.Bots.Connection.Damn (
-  damnConnectionWith,
-  damnConnection
+  damnConnection,
+  damnConnectionWith
 ) where
 
 import Control.Monad.IO.Class

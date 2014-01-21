@@ -34,6 +34,7 @@ import Control.Monad.IO.Class
 import Network.Bots.Connection
 import Network.Bots.Stateful
 
+-- | Run a bot.
 runBot :: MonadIO m => [Connection m] -> IO ()
 runBot cs = foldr ((>>) . wait) (return ()) =<< go cs where
     go [] = return []
@@ -41,7 +42,8 @@ runBot cs = foldr ((>>) . wait) (return ()) =<< go cs where
         a <- async $ runConnection c
         fmap (a:) (go css)
 
-runBotWithState :: MonadIO m => a -> [StatefulConnection a m] -> IO ()
+-- | Convenience function to avoid lots of 'StateC' wrapping and unwrapping.
+runBotWithState :: MonadIO m => a -> [Connection m] -> IO ()
 runBotWithState s cs = do
     m <- newTVarIO s
     runBot =<< mapM (statefully m) cs

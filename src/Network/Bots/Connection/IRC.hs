@@ -18,13 +18,6 @@ import Network.IRC.ByteString.Parser
 -- | @ircConnectionWith f host port@ produces an IRC connection to @host@ and @port@, using @f@
 -- to execute functions from your custom monad in IO.
 --
--- For example, if you want to run this connection in a State monad:
---
--- @
---'runConnection' $ ircConnectionWith (\`evalState\` myInitialBotState)
---                                  \"myHost\"
---                                  ('PortNumber' 23)
--- @
 ircConnectionWith :: MonadIO m => (forall a. m a -> IO a) -> HostName -> PortID -> Connection m
 ircConnectionWith f h p = Connection
     { parser = ircLine <* string "\r\n"
