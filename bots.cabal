@@ -20,7 +20,7 @@ library
                      , async
                      , attoparsec
                      , bytestring
-                     , concurrent-state >= 0.2
+                     , concurrent-state >= 0.3
                      , containers
                      , data-default
                      , irc-bytestring
