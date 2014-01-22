@@ -13,6 +13,7 @@ module Network.Bots.Connection.Class (
   , StatefulConnection
 ) where
 
+import Control.Concurrent.STM.TVar
 import Control.Monad.Error
 import Control.Monad.State.Concurrent
 import Data.Attoparsec.ByteString
@@ -21,7 +22,7 @@ import Data.Monoid                   (mempty, (<>))
 import Network.Bots.Backend
 import System.IO
 
-type StatefulConnection s m = Connection (StateC s m)
+type StatefulConnection s m = TVar s -> Connection (StateC s m)
 
 -- | A connection.
 data MonadIO env => Connection env = forall backend. Connection
